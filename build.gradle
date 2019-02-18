@@ -1,0 +1,28 @@
+plugins {
+	id 'fabric-loom' version '0.2.0-SNAPSHOT'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+archivesBaseName = "needle-api"
+version = "0.0.1"
+
+minecraft {
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:19w07a"
+	mappings "net.fabricmc:yarn:19w07a.8"
+
+	modCompile "net.fabricmc:fabric-loader:0.3.6.107"
+	modCompile "net.fabricmc:fabric:0.2.1.94"
+	modCompile "net.fabricmc:fabric-language-kotlin:1.3.20+"
+
+	compileOnly "net.fabricmc:fabric-language-kotlin:1.3.20+"
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+	classifier = 'sources'
+	from sourceSets.main.allSource
+}
