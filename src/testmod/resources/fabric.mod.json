@@ -13,6 +13,6 @@
     "fabric-language-kotlin": {
       "version": ">=1.3.20"
     },
-    "needle-api": "*"
+    "needleapi": "*"
   }
 }
