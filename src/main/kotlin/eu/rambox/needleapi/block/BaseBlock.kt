@@ -7,27 +7,24 @@ import net.minecraft.item.block.BlockItem
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
-abstract class BaseBlock  :  Block {
-    var blockItemGroup : ItemGroup? = null
-    var stackSize : Int? = null
-
-    // TODO: Make proper fields for this properties
-    private var blockSettings: Settings? = null
-    private var id: String? = null
-    private var name: String? = null
-
-
+abstract class BaseBlock : Block {
     constructor(blockSettings: Settings, id: String, name: String) : super(blockSettings) {
-        this.blockSettings = blockSettings
-        this.id = id
-        this.name = name
+        Registry.BLOCK.register(Identifier(id, name), this)
+        Registry.ITEM.register(Identifier(id, name), BlockItem(this, Item.Settings().stackSize(64).itemGroup(ItemGroup.MISC)))
     }
 
-    open fun onRegistered() {}
+    constructor(blockSettings: Settings, identifier: Identifier) : super(blockSettings) {
+        Registry.BLOCK.register(identifier, this)
+        Registry.ITEM.register(identifier, BlockItem(this, Item.Settings().stackSize(64).itemGroup(ItemGroup.MISC)))
+    }
 
-    init {
+    constructor(blockSettings: Settings, id: String, name: String, blockItemSettings: Item.Settings) : super(blockSettings) {
         Registry.BLOCK.register(Identifier(id, name), this)
-        Registry.ITEM.register(Identifier(id, name), BlockItem(this, Item.Settings().stackSize(stackSize ?: 64).itemGroup(blockItemGroup ?: ItemGroup.MISC)))
-        onRegistered()
+        Registry.ITEM.register(Identifier(id, name), BlockItem(this, blockItemSettings))
+    }
+
+    constructor(blockSettings: Settings, identifier: Identifier, blockItemSettings: Item.Settings) : super(blockSettings) {
+        Registry.BLOCK.register(identifier, this)
+        Registry.ITEM.register(identifier, BlockItem(this, blockItemSettings))
     }
 }
