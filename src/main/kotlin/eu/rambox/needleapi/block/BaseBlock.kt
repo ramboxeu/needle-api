@@ -9,22 +9,23 @@ import net.minecraft.util.registry.Registry
 
 abstract class BaseBlock : Block {
     constructor(blockSettings: Settings, id: String, name: String) : super(blockSettings) {
-        Registry.BLOCK.register(Identifier(id, name), this)
-        Registry.ITEM.register(Identifier(id, name), BlockItem(this, Item.Settings().stackSize(64).itemGroup(ItemGroup.MISC)))
+        this.registerBlock(id = id, name = name)
     }
 
     constructor(blockSettings: Settings, identifier: Identifier) : super(blockSettings) {
-        Registry.BLOCK.register(identifier, this)
-        Registry.ITEM.register(identifier, BlockItem(this, Item.Settings().stackSize(64).itemGroup(ItemGroup.MISC)))
+        this.registerBlock(identifier = identifier)
     }
 
     constructor(blockSettings: Settings, id: String, name: String, blockItemSettings: Item.Settings) : super(blockSettings) {
-        Registry.BLOCK.register(Identifier(id, name), this)
-        Registry.ITEM.register(Identifier(id, name), BlockItem(this, blockItemSettings))
+        this.registerBlock(id = id, name = name, blockItemSettings = blockItemSettings)
     }
 
     constructor(blockSettings: Settings, identifier: Identifier, blockItemSettings: Item.Settings) : super(blockSettings) {
-        Registry.BLOCK.register(identifier, this)
-        Registry.ITEM.register(identifier, BlockItem(this, blockItemSettings))
+        this.registerBlock(identifier = identifier, blockItemSettings = blockItemSettings)
+    }
+
+    private fun registerBlock(id: String? = null, name: String? = null, identifier: Identifier? = null, blockItemSettings: Item.Settings? = null) {
+        Registry.BLOCK.register(identifier ?: Identifier(id, name), this)
+        Registry.ITEM.register(identifier ?: Identifier(id, name), BlockItem(this, blockItemSettings ?: Item.Settings().itemGroup(ItemGroup.MISC).stackSize(64)))
     }
 }
