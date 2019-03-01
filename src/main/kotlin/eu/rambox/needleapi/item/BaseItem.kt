@@ -6,11 +6,11 @@ import net.minecraft.util.registry.Registry
 
 abstract class BaseItem : Item {
 
-    constructor(id: String, name: String) : super(null) {
+    constructor(id: String, name: String, itemSettings: Settings? = null) : super(itemSettings) {
         registerItem(id = id, name = name)
     }
 
-    constructor(identifier: Identifier) : super(null) {
+    constructor(identifier: Identifier, itemSettings: Settings? = null) : super(itemSettings) {
         registerItem(identifier = identifier)
     }
 
